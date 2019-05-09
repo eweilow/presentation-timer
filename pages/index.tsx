@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, ButtonHTMLAttributes } from "react";
 import Head from "next/head";
 import { Clock } from "../components/clock";
 import clsx from "clsx";
 import { useClock } from "../hooks/useClock";
+import { Controls } from "../components/controls";
 
 const Header: React.FC<{ title: string }> = props => (
   <header>
@@ -10,7 +11,7 @@ const Header: React.FC<{ title: string }> = props => (
     <div className="contents">{props.children}</div>
     <style jsx>{`
       header {
-        font-size: 96px;
+        font-size: 140px;
         display: block;
         width: 100%;
         text-align: center;
@@ -46,15 +47,7 @@ export default () => {
   return (
     <div className={clsx("container", { alertOvertime, warnOvertime })}>
       <div>
-        <div>
-          <button disabled={active} onClick={() => setActive(true)}>
-            start
-          </button>
-          <button disabled={!active} onClick={() => setActive(false)}>
-            stop
-          </button>
-          <button onClick={() => reset()}>reset</button>
-        </div>
+        <Controls active={active} setActive={setActive} reset={reset} />
         <Header title={timeLeft > 0 ? "left" : "overtime"}>
           <Clock timeLeft={timeLeft + 999} />
         </Header>

@@ -9,6 +9,7 @@
     "now-build": "next build"
   },
   "dependencies": {
+    "@mdi/js": "^3.6.95",
     "@zeit/next-typescript": "1.1.1",
     "clsx": "^1.0.4",
     "next": "8.1.0",
