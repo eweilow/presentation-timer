@@ -18,6 +18,6 @@
 ## Things to add
 
 - [ ] Error logging
-- [ ] Analytics?
-- [ ] GitHub link
-- [ ] Author info?
+- [x] Analytics?
+- [x] GitHub link
+- [x] Author info?
