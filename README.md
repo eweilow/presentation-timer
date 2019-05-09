@@ -3,8 +3,8 @@
 ## Future features
 
 - [ ] Set the countdown duration
-- [ ] Able to pause and resume countdown
-- [ ] Able to stop countdown
+- [x] Able to pause and resume countdown
+- [x] Able to stop countdown
 - [ ] Able to set current countdown time
 
 - [ ] Customize warning time
