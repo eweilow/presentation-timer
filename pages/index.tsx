@@ -4,6 +4,7 @@ import { Clock } from "../components/clock";
 import clsx from "clsx";
 import { useClock } from "../hooks/useClock";
 import { Controls } from "../components/controls";
+import { Footer } from "../components/footer";
 
 const Header: React.FC<{ title: string }> = props => (
   <header>
@@ -59,6 +60,7 @@ export default () => {
           <Clock timeLeft={timeUsed} />
         </Header>
       </div>
+      <Footer />
       <Head>
         <link
           href="https://fonts.googleapis.com/css?family=Roboto:400,500,700"
