@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { useClock } from "../hooks/useClock";
 import { Controls } from "../components/controls";
 import { Footer } from "../components/footer";
+import { useAnalytics } from "../hooks/useAnalytics";
 
 const Header: React.FC<{ title: string }> = props => (
   <header>
@@ -32,6 +33,8 @@ const Header: React.FC<{ title: string }> = props => (
 );
 
 export default () => {
+  useAnalytics();
+
   const durationTime = 1000 * 60 * 18;
   const alertTime = 0;
   const warnTime = 60000;

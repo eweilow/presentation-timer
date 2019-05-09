@@ -12,6 +12,7 @@
     "@mdi/js": "^3.6.95",
     "@zeit/next-typescript": "1.1.1",
     "clsx": "^1.0.4",
+    "ganalytics": "^3.1.2",
     "next": "8.1.0",
     "react": "16.8.6",
     "react-dom": "16.8.6"
