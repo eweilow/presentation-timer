@@ -1,0 +1,25 @@
+{
+  "name": "presentation-timer",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "now-build": "next build"
+  },
+  "dependencies": {
+    "@zeit/next-typescript": "1.1.1",
+    "clsx": "^1.0.4",
+    "next": "8.1.0",
+    "react": "16.8.6",
+    "react-dom": "16.8.6"
+  },
+  "devDependencies": {
+    "@types/next": "8.0.5",
+    "@types/react": "16.8.17",
+    "@types/react-dom": "16.8.4",
+    "@types/styled-jsx": "^2.2.8",
+    "typescript": "3.4.5"
+  }
+}
