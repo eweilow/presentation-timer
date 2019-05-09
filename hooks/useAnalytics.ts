@@ -1,6 +1,8 @@
-import { useEffect, useMemo } from "react";
+import { useMemo, useEffect } from "react";
 
 import ganalytics, { GAnalytics } from "ganalytics";
+import Router from "next/router";
+
 let cached: GAnalytics;
 
 function createClient() {
@@ -14,11 +16,19 @@ function createClient() {
 }
 
 export function useAnalytics() {
-  if (typeof window !== "undefined") {
+  if ((process as any).browser) {
+    if (navigator.doNotTrack === "1") {
+      console.info("Respecting DNT");
+      return;
+    }
     const client = useMemo(() => createClient(), []);
-
     useEffect(() => {
-      client.send("pageview");
-    }, [document.location.href]);
+      function handler(url: string) {
+        client.send("pageview");
+      }
+      Router.events.on("routeChangeComplete", handler);
+
+      return () => Router.events.off("routeChangeComplete", handler);
+    }, []);
   }
 }
