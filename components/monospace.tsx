@@ -5,8 +5,10 @@ export const Monospace: React.FC<{
   characterWidth: number;
 }> = props => (
   <span>
-    {[...props.children].map(el => (
-      <span className="character">{el}</span>
+    {[...props.children].map((el, i) => (
+      <span className="character" key={i}>
+        {el}
+      </span>
     ))}
     <style jsx>{`
       .character {
