@@ -8,24 +8,34 @@ export function useClock(initialTime: number) {
   const currentStartedRef = useRef(-1);
 
   useEffect(() => {
-    currentStartedRef.current = Date.now();
-  }, [active]);
-
-  useEffect(() => {
     if (!active) {
       return;
     }
 
     const intervalId = setInterval(() => {
-      setCurrentTimeUsed(Date.now() - currentStartedRef.current);
+      const current = Date.now() - currentStartedRef.current;
+      setCurrentTimeUsed(current);
     }, 200);
 
     return () => {
-      setTimeUsed(timeUsed + (Date.now() - currentStartedRef.current));
-      setCurrentTimeUsed(0);
       clearInterval(intervalId);
     };
   }, [timeUsed, active]);
+
+  const setActiveCallback = useCallback(
+    activeState => {
+      if (!activeState && active) {
+        setTimeUsed(timeUsed + (Date.now() - currentStartedRef.current));
+        setCurrentTimeUsed(0);
+        setActive(activeState);
+      } else if (activeState && !active) {
+        currentStartedRef.current = Date.now();
+        setCurrentTimeUsed(0);
+        setActive(activeState);
+      }
+    },
+    [active, setTimeUsed, setCurrentTimeUsed, setActive, currentStartedRef]
+  );
 
   const reset = useCallback(() => {
     currentStartedRef.current = Date.now();
@@ -36,7 +46,7 @@ export function useClock(initialTime: number) {
 
   return {
     active,
-    setActive,
+    setActive: setActiveCallback,
     timeUsed: timeUsed + currentTimeUsed,
     reset
   };
