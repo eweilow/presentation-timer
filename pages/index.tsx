@@ -32,7 +32,7 @@ const Header: React.FC<{ title: string }> = props => (
 );
 
 export default () => {
-  const durationTime = 70000;
+  const durationTime = 1000 * 60 * 18;
   const alertTime = 0;
   const warnTime = 60000;
 
