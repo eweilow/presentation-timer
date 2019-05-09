@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
-export function useClock(initialTime: number, active: boolean) {
+export function useClock(initialTime: number) {
+  const [active, setActive] = useState(false);
   const [timeUsed, setTimeUsed] = useState(initialTime);
   const [currentTimeUsed, setCurrentTimeUsed] = useState(0);
 
@@ -26,12 +27,17 @@ export function useClock(initialTime: number, active: boolean) {
     };
   }, [timeUsed, active]);
 
+  const reset = useCallback(() => {
+    currentStartedRef.current = Date.now();
+    setTimeUsed(0);
+    setCurrentTimeUsed(0);
+    setActive(false);
+  }, [currentStartedRef, setTimeUsed, setCurrentTimeUsed]);
+
   return {
+    active,
+    setActive,
     timeUsed: timeUsed + currentTimeUsed,
-    reset() {
-      currentStartedRef.current = Date.now();
-      setTimeUsed(0);
-      setCurrentTimeUsed(0);
-    }
+    reset
   };
 }

@@ -3,6 +3,7 @@ import { mdiPlayCircleOutline, mdiPauseCircleOutline, mdiNuke } from "@mdi/js";
 import { ControlButton } from "./controlButton";
 
 export const Controls: React.FC<{
+  timeUsed: number;
   active: boolean;
   setActive: (active: boolean) => void;
   reset: () => void;
@@ -21,6 +22,7 @@ export const Controls: React.FC<{
       title="Pause"
     />
     <ControlButton
+      disabled={props.timeUsed < 1000}
       onClick={() => {
         if (confirm("Really reset?")) {
           props.reset();

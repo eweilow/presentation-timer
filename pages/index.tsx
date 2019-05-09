@@ -1,4 +1,4 @@
-import React, { useState, ButtonHTMLAttributes } from "react";
+import React, { useState } from "react";
 import Head from "next/head";
 import { Clock } from "../components/clock";
 import clsx from "clsx";
@@ -35,8 +35,7 @@ export default () => {
   const alertTime = 0;
   const warnTime = 60000;
 
-  const [active, setActive] = useState(false);
-  const { timeUsed, reset } = useClock(0, active);
+  const { timeUsed, active, setActive, reset } = useClock(0);
   const timeLeft = durationTime - timeUsed;
 
   const transitionTime = 5000;
@@ -47,7 +46,12 @@ export default () => {
   return (
     <div className={clsx("container", { alertOvertime, warnOvertime })}>
       <div>
-        <Controls active={active} setActive={setActive} reset={reset} />
+        <Controls
+          timeUsed={timeUsed}
+          active={active}
+          setActive={setActive}
+          reset={reset}
+        />
         <Header title={timeLeft > 0 ? "left" : "overtime"}>
           <Clock timeLeft={timeLeft + 999} />
         </Header>
