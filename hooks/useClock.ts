@@ -21,7 +21,7 @@ export function useClock(initialTime: number) {
     }, 200);
 
     return () => {
-      setTimeUsed(timeUsed + currentTimeUsed);
+      setTimeUsed(timeUsed + (Date.now() - currentStartedRef.current));
       setCurrentTimeUsed(0);
       clearInterval(intervalId);
     };
