@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "alias": ["presentation-timer.now.sh"],
   "name": "presentation-timer",
   "builds": [{ "src": "next.config.js", "use": "@now/next" }]
 }
