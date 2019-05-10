@@ -1,11 +1,14 @@
-import React, { useState } from "react";
-import Head from "next/head";
+import React, { useState, useMemo } from "react";
 import { Clock } from "../components/clock";
 import clsx from "clsx";
 import { useClock } from "../hooks/useClock";
 import { Controls } from "../components/controls";
 import { Footer } from "../components/footer";
 import { useAnalytics } from "../hooks/useAnalytics";
+import { Modal } from "../components/modal";
+import { Settings, SettingsData } from "../components/settings";
+import Router, { DefaultQuery } from "next/router";
+import { NextFunctionComponent, NextFC } from "next";
 
 const Header: React.FC<{ title: string }> = props => (
   <header>
@@ -32,20 +35,83 @@ const Header: React.FC<{ title: string }> = props => (
   </header>
 );
 
-export default () => {
+const encodeBase64 = (process as any).browser
+  ? btoa
+  : function btoa(str: string) {
+      return Buffer.from(str).toString("base64");
+    };
+
+const decodeBase64 = (process as any).browser
+  ? atob
+  : function atob(str: string) {
+      return Buffer.from(str, "base64").toString("ascii");
+    };
+
+function compressSettings(data: SettingsData): any {
+  return {
+    v: 0,
+    d: data.duration,
+    a: data.alert,
+    w: data.warn
+  };
+}
+function uncompressSettings(data: any): SettingsData {
+  if (data.v === 0) {
+    return {
+      alert: data.a,
+      warn: data.w,
+      duration: data.d
+    };
+  }
+  throw new Error(
+    "Unsupported settings version: " + encodeURIComponent(data.v)
+  );
+}
+
+const defaultSettings = {
+  alert: "00:00",
+  duration: "00:18:00",
+  warn: "02:00"
+};
+function readSettings(query: DefaultQuery): SettingsData {
+  if (!("s" in query)) {
+    return defaultSettings;
+  }
+  const s = query.s;
+  if (typeof s !== "string") {
+    return defaultSettings;
+  }
+
+  try {
+    const jsonString = decodeBase64(s);
+    return uncompressSettings(JSON.parse(jsonString));
+  } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.error(err);
+    }
+    return defaultSettings;
+  }
+}
+
+type InitialProps = {
+  settings: SettingsData;
+  durationTime: number;
+  alertTime: number;
+  warnTime: number;
+};
+
+const IndexPage: NextFC<InitialProps, InitialProps> = props => {
   useAnalytics();
 
-  const durationTime = 1000 * 60 * 18;
-  const alertTime = 0;
-  const warnTime = 60000;
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const { timeUsed, active, setActive, reset } = useClock(0);
-  const timeLeft = durationTime - timeUsed;
+  const timeLeft = props.durationTime - timeUsed;
 
   const transitionTime = 5000;
 
-  const alertOvertime = timeLeft < alertTime + transitionTime;
-  const warnOvertime = timeLeft < warnTime + transitionTime;
+  const alertOvertime = timeLeft < props.alertTime + transitionTime;
+  const warnOvertime = timeLeft < props.warnTime + transitionTime;
 
   return (
     <div className={clsx("container", { alertOvertime, warnOvertime })}>
@@ -55,6 +121,7 @@ export default () => {
           active={active}
           setActive={setActive}
           reset={reset}
+          onOpenSettings={() => setSettingsOpen(true)}
         />
         <Header title={timeLeft > 0 ? "left" : "overtime"}>
           <Clock timeLeft={timeLeft + 999} />
@@ -62,15 +129,25 @@ export default () => {
         <Header title="used">
           <Clock timeLeft={timeUsed} />
         </Header>
+        <Modal
+          onShouldClose={() => setSettingsOpen(false)}
+          active={settingsOpen}
+        >
+          <Settings
+            settings={props.settings}
+            onSave={data => {
+              Router.replace({
+                pathname: "/",
+                query: {
+                  s: encodeBase64(JSON.stringify(compressSettings(data)))
+                }
+              });
+              setSettingsOpen(false);
+            }}
+          />
+        </Modal>
       </div>
       <Footer />
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css?family=Roboto:400,500,700"
-          rel="stylesheet"
-          key="google-font-roboto"
-        />
-      </Head>
       <style jsx>{`
         .container {
           width: 100%;
@@ -94,18 +171,28 @@ export default () => {
           color: white;
         }
       `}</style>
-      <style jsx global>{`
-        html,
-        body,
-        #__next {
-          width: 100%;
-          min-height: 100%;
-          display: flex;
-          margin: 0;
-          padding: 0;
-          font-family: "Roboto", sans-serif;
-        }
-      `}</style>
     </div>
   );
 };
+
+function parseFormat(formatted: string) {
+  const split = formatted.split(":").map(el => parseInt(el));
+  if (split.length === 3) {
+    return 1000 * (3600 * split[0] + 60 * split[1] + split[2]);
+  } else if (split.length !== 2) {
+    throw new Error("Formatted must be either hh:mm:ss or mm:ss");
+  }
+  return 1000 * (60 * split[0] + split[1]);
+}
+
+IndexPage.getInitialProps = ctx => {
+  const settings = readSettings(ctx.query);
+  return {
+    settings,
+    alertTime: parseFormat(settings.alert),
+    warnTime: parseFormat(settings.warn),
+    durationTime: parseFormat(settings.duration)
+  };
+};
+
+export default IndexPage;
