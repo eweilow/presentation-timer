@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mdi/js": "^3.6.95",
+    "@types/next-seo": "^1.10.0",
     "@types/react-text-mask": "^5.4.4",
     "@types/yup": "^0.26.13",
     "@zeit/next-typescript": "1.1.1",
@@ -17,6 +18,7 @@
     "formik": "^2.0.1-alpha.2",
     "ganalytics": "^3.1.2",
     "next": "8.1.0",
+    "next-seo": "^1.11.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-spring": "^8.0.20",

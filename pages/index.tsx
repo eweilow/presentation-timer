@@ -8,7 +8,8 @@ import { useAnalytics } from "../hooks/useAnalytics";
 import { Modal } from "../components/modal";
 import { Settings, SettingsData } from "../components/settings";
 import Router, { DefaultQuery } from "next/router";
-import { NextFunctionComponent, NextFC } from "next";
+import { NextFC } from "next";
+import NextSeo from "next-seo";
 
 const Header: React.FC<{ title: string }> = props => (
   <header>
@@ -115,6 +116,19 @@ const IndexPage: NextFC<InitialProps, InitialProps> = props => {
 
   return (
     <div className={clsx("container", { alertOvertime, warnOvertime })}>
+      <NextSeo
+        config={{
+          title: "Presentation Timer",
+          description: "Keep track of the time left in your presentations",
+          canonical: "https://presentation-timer.now.sh",
+          openGraph: {
+            url: "https://presentation-timer.now.sh",
+            title: "Presentation Timer",
+            description: "Keep track of the time left in your presentations",
+            site_name: "Presentation Timer"
+          }
+        }}
+      />
       <div>
         <Controls
           timeUsed={timeUsed}
