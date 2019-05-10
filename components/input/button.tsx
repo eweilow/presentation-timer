@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes, useMemo } from "react";
 import clsx from "clsx";
 
 const styles = {
@@ -59,134 +59,146 @@ export const Button: React.FC<
     leftIcon?: string;
     rightIcon?: string;
   } & ButtonHTMLAttributes<any>
-> = props => (
-  <button
-    {...props}
-    className={clsx({ dark: !props.light, light: props.light })}
-  >
-    {props.leftIcon && <ButtonIcon marginRight svg={props.leftIcon} />}
-    {props.children}
-    {props.rightIcon && <ButtonIcon marginLeft svg={props.rightIcon} />}
-    <style jsx>{`
-      button {
-        pointer-events: all;
+> = props => {
+  const buttonProps = useMemo(() => {
+    const p = {
+      ...props
+    };
+    delete p.rightIcon;
+    delete p.leftIcon;
+    delete p.light;
+    return p;
+  }, [props]);
 
-        border: none;
-        background: none;
-        outline: none;
+  return (
+    <button
+      {...buttonProps}
+      className={clsx({ dark: !props.light, light: props.light })}
+    >
+      {props.leftIcon && <ButtonIcon marginRight svg={props.leftIcon} />}
+      {props.children}
+      {props.rightIcon && <ButtonIcon marginLeft svg={props.rightIcon} />}
+      <style jsx>{`
+        button {
+          pointer-events: all;
 
-        padding: 0;
-        margin: 0;
+          border: none;
+          background: none;
+          outline: none;
 
-        font-weight: bold;
-        text-transform: uppercase;
-        font-family: "Roboto", sans-serif;
-        font-size: 14px;
-        text-decoration: none;
+          padding: 0;
+          margin: 0;
 
-        cursor: pointer;
+          font-weight: bold;
+          text-transform: uppercase;
+          font-family: "Roboto", sans-serif;
+          font-size: 14px;
+          text-decoration: none;
 
-        position: relative;
+          cursor: pointer;
 
-        display: flex;
-        padding: 0 12px;
-        height: 36px;
-        touch-action: manipulation;
+          position: relative;
 
-        text-transform: uppercase;
+          display: flex;
+          padding: 0 12px;
+          height: 36px;
+          touch-action: manipulation;
 
-        align-items: center;
-        justify-content: flex-start;
-        background: none;
-        border: none;
-        outline: none;
-        border-radius: 8px;
-        user-select: none;
-        cursor: pointer;
-      }
+          text-transform: uppercase;
 
-      button::after {
-        display: block;
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: #fff;
-        border-radius: 8px;
+          align-items: center;
+          justify-content: flex-start;
+          background: none;
+          border: none;
+          outline: none;
+          border-radius: 8px;
+          user-select: none;
+          cursor: pointer;
+        }
 
-        opacity: 0;
+        button::after {
+          display: block;
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: #fff;
+          border-radius: 8px;
 
-        transition: opacity 175ms;
-      }
+          opacity: 0;
 
-      button:hover::after {
-        opacity: 0.1;
-      }
+          transition: opacity 175ms;
+        }
 
-      button:active::after {
-        opacity: 0.2;
-      }
+        button:hover::after {
+          opacity: 0.1;
+        }
 
-      button.light::after {
-        opacity: 0.1;
-      }
-      button.light:hover::after {
-        opacity: 0.15;
-      }
-      button.light:active::after {
-        opacity: 0.2;
-      }
+        button:active::after {
+          opacity: 0.2;
+        }
 
-      button[disabled] {
-        pointer-events: none;
-      }
-      button[disabled]::after {
-        opacity: 0 !important;
-      }
+        button.light::after {
+          opacity: 0.1;
+        }
+        button.light:hover::after {
+          opacity: 0.15;
+        }
+        button.light:active::after {
+          opacity: 0.2;
+        }
 
-      button.dark {
-        background: ${styles.background};
-        color: ${styles.color};
-      }
-      button.dark:hover {
-        background: ${styles.hoverBackground};
-        color: ${styles.hoverColor};
-      }
-      button.dark:focus {
-        background: ${styles.focusBackground};
-        color: ${styles.focusColor};
-      }
-      button.dark:active {
-        background: ${styles.activeBackground};
-        color: ${styles.activeColor};
-      }
-      button.dark:disabled {
-        background: ${styles.disabledBackground};
-        color: ${styles.disabledColor};
-      }
+        button[disabled] {
+          pointer-events: none;
+        }
+        button[disabled]::after {
+          opacity: 0 !important;
+        }
 
-      button.light {
-        background: ${lightStyles.background};
-        color: ${lightStyles.color};
-      }
-      button.light:hover {
-        background: ${lightStyles.hoverBackground};
-        color: ${lightStyles.hoverColor};
-      }
-      button.light:focus {
-        background: ${lightStyles.focusBackground};
-        color: ${lightStyles.focusColor};
-      }
-      button.light:active {
-        background: ${lightStyles.activeBackground};
-        color: ${lightStyles.activeColor};
-      }
-      button.light:disabled {
-        background: ${lightStyles.disabledBackground};
-        color: ${lightStyles.disabledColor};
-      }
-    `}</style>
-  </button>
-);
+        button.dark {
+          background: ${styles.background};
+          color: ${styles.color};
+        }
+        button.dark:hover {
+          background: ${styles.hoverBackground};
+          color: ${styles.hoverColor};
+        }
+        button.dark:focus {
+          background: ${styles.focusBackground};
+          color: ${styles.focusColor};
+        }
+        button.dark:active {
+          background: ${styles.activeBackground};
+          color: ${styles.activeColor};
+        }
+        button.dark:disabled {
+          background: ${styles.disabledBackground};
+          color: ${styles.disabledColor};
+        }
+
+        button.light {
+          background: ${lightStyles.background};
+          color: ${lightStyles.color};
+        }
+        button.light:hover {
+          background: ${lightStyles.hoverBackground};
+          color: ${lightStyles.hoverColor};
+        }
+        button.light:focus {
+          background: ${lightStyles.focusBackground};
+          color: ${lightStyles.focusColor};
+        }
+        button.light:active {
+          background: ${lightStyles.activeBackground};
+          color: ${lightStyles.activeColor};
+        }
+        button.light:disabled {
+          background: ${lightStyles.disabledBackground};
+          color: ${lightStyles.disabledColor};
+        }
+      `}</style>
+    </button>
+  );
+};
