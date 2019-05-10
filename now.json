@@ -8,9 +8,5 @@
       "src": "/",
       "headers": { "cache-control": "s-maxage=5, stale-while-revalidate" }
     }
-  ],
-  "env": {
-    "ANALYTICS_ID": "@presanalytics",
-    "SENTRY_DSN": "@pressentry"
-  }
+  ]
 }

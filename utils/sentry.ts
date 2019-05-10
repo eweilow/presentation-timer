@@ -1,7 +1,12 @@
 // Based on https://github.com/zeit/next.js/blob/canary/examples/with-sentry/utils/sentry.js
 
-import * as Sentry from "@sentry/browser";
-import * as SentryIntegrations from "@sentry/integrations";
+import {
+  init,
+  showReportDialog,
+  configureScope,
+  captureException
+} from "@sentry/browser";
+import { Debug } from "@sentry/integrations";
 import { NextContext } from "next";
 
 export default (release: string = process.env.SENTRY_RELEASE) => {
@@ -23,22 +28,24 @@ export default (release: string = process.env.SENTRY_RELEASE) => {
 
     // Instead, dump the errors to the console
     sentryOptions.integrations = [
-      new SentryIntegrations.Debug({
+      new Debug({
         // Trigger DevTools debugger instead of using console.log
         debugger: false
       })
     ];
   }
 
-  Sentry.init(sentryOptions);
+  init(sentryOptions);
 
   return {
-    Sentry,
+    Sentry: {
+      showReportDialog: showReportDialog
+    },
     captureException: (
       err: Error & { statusCode?: number },
       ctx: NextContext & { errorInfo?: any }
     ) => {
-      Sentry.configureScope(scope => {
+      configureScope(scope => {
         if (err.message) {
           // De-duplication currently doesn't work correctly for SSR / browser errors
           // so we force deduplication by error message if it is present
@@ -76,7 +83,7 @@ export default (release: string = process.env.SENTRY_RELEASE) => {
         }
       });
 
-      return Sentry.captureException(err);
+      return captureException(err);
     }
   };
 };

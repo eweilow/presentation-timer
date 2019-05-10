@@ -5,14 +5,14 @@ const webpack = require("webpack");
 
 module.exports = withPlugins([withTypescript, nextSourceMaps], {
   target: "serverless",
-  env: {
-    SENTRY_DSN: process.env.SENTRY_DSN,
-    ANALYTICS_ID: process.env.ANALYTICS_ID
-  },
   webpack: (config, { isServer, buildId }) => {
     config.plugins.push(
       new webpack.DefinePlugin({
-        "process.env.SENTRY_RELEASE": JSON.stringify(buildId)
+        "process.env.SENTRY_RELEASE": JSON.stringify(buildId),
+        "process.env.SENTRY_DSN": JSON.stringify(
+          "https://21e698239c7443c9a882995ffe28f187@sentry.io/1456861"
+        ),
+        "process.env.ANALYTICS_ID": JSON.stringify("UA-82332728-6")
       })
     );
 
