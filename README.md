@@ -18,7 +18,7 @@
 ## Things to add
 
 - [ ] Responsiveness
-- [ ] Error logging
+- [x] Error logging
 - [x] Analytics?
 - [x] GitHub link
 - [x] Author info?
