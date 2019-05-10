@@ -16,30 +16,30 @@ export const Header: React.FC<{ title: string }> = props => (
 
       @media (max-width: 1600px) {
         header {
-          font-size: 120px;
+          font-size: 125px;
         }
       }
       @media (max-width: 1000px) {
         header {
           padding: 24px;
-          font-size: 100px;
+          font-size: 110px;
         }
       }
       @media (max-width: 800px) {
         header {
           padding: 16px;
-          font-size: 80px;
+          font-size: 85px;
         }
       }
       @media (max-width: 600px) {
         header {
           padding: 8px;
-          font-size: 60px;
+          font-size: 65px;
         }
       }
       @media (max-width: 340px) {
         header {
-          font-size: 40px;
+          font-size: 45px;
         }
       }
 
