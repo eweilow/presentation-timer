@@ -116,6 +116,21 @@ export const Button: React.FC<
           cursor: pointer;
         }
 
+        @media (min-width: 800px) {
+          button {
+            height: 48px;
+            font-size: 16px;
+            padding: 0 16px;
+          }
+        }
+        @media (min-width: 1600px) {
+          button {
+            height: 56px;
+            font-size: 20px;
+            padding: 0 24px;
+          }
+        }
+
         button::after {
           display: block;
           content: "";

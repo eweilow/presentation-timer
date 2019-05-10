@@ -154,6 +154,17 @@ export const InputBase: React.FC<{
       .rightIcon .box :global(input) {
         padding-right: 40px;
       }
+
+      @media (max-width: 800px) {
+        .box {
+          height: 56px;
+        }
+      }
+      @media (max-width: 800px) {
+        .box :global(input) {
+          font-size: 16px;
+        }
+      }
     `}</style>
   </div>
 );

@@ -14,22 +14,41 @@ export const Pane: React.FC<{ onShouldClose: () => void }> = props => (
         display: flex;
         align-items: center;
         justify-content: center;
+
+        padding: 32px;
       }
 
       .pane div {
         background: white;
         border-radius: 16px;
-        position: fixed;
-        max-height: 100vh;
-        max-width: 100vw;
+        max-height: 100%;
+        max-width: 100%;
 
-        margin: 32px;
+        box-sizing: border-box;
 
         min-width: 300px;
         min-height: 300px;
 
         pointer-events: all;
         box-shadow: 0px 5px 20px #00000082;
+
+        overflow-y: auto;
+        max-height: 100%;
+      }
+
+      @media (max-width: 800px) {
+        .pane {
+          padding: 16px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .pane {
+          padding: 16px 0;
+        }
+        .pane div {
+          border-radius: 0;
+        }
       }
     `}</style>
   </section>

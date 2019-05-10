@@ -17,7 +17,7 @@
 
 ## Things to add
 
-- [ ] Responsiveness
+- [x] Responsiveness
 - [x] Error logging
 - [x] Analytics?
 - [x] GitHub link
