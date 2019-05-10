@@ -78,7 +78,7 @@ type InitialProps = {
 const IndexPage: NextFC<InitialProps, InitialProps> = props => {
   useAnalytics(props.settings);
 
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(true);
 
   const { timeUsed, active, setActive, reset } = useClock(0);
   const timeLeft = props.durationTime - timeUsed;
