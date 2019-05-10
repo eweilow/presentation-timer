@@ -36,9 +36,7 @@ export const Modal: React.FC<{
         ({ item, props: springProps, key }) =>
           item && (
             <animated.div key={key} style={springProps}>
-              <Backdrop onShouldClose={props.onShouldClose}>
-                {props.children}
-              </Backdrop>
+              <Backdrop onShouldClose={props.onShouldClose} />
             </animated.div>
           )
       )}

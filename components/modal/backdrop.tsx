@@ -2,7 +2,6 @@ import React from "react";
 
 export const Backdrop: React.FC<{ onShouldClose: () => void }> = props => (
   <section className="backdrop" onClick={props.onShouldClose}>
-    {props.children}
     <style jsx>{`
       .backdrop {
         background: black;

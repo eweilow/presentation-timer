@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Head from "next/head";
 import { Clock } from "../components/clock";
 import clsx from "clsx";
 import { useClock } from "../hooks/useClock";
@@ -7,6 +6,7 @@ import { Controls } from "../components/controls";
 import { Footer } from "../components/footer";
 import { useAnalytics } from "../hooks/useAnalytics";
 import { Modal } from "../components/modal";
+import { Settings } from "../components/settings";
 
 const Header: React.FC<{ title: string }> = props => (
   <header>
@@ -69,16 +69,11 @@ export default () => {
         <Modal
           onShouldClose={() => setSettingsOpen(false)}
           active={settingsOpen}
-        />
+        >
+          <Settings />
+        </Modal>
       </div>
       <Footer />
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css?family=Roboto:400,500,700"
-          rel="stylesheet"
-          key="google-font-roboto"
-        />
-      </Head>
       <style jsx>{`
         .container {
           width: 100%;
@@ -100,18 +95,6 @@ export default () => {
         .container.alertOvertime {
           background: #d00114;
           color: white;
-        }
-      `}</style>
-      <style jsx global>{`
-        html,
-        body,
-        #__next {
-          width: 100%;
-          min-height: 100%;
-          display: flex;
-          margin: 0;
-          padding: 0;
-          font-family: "Roboto", sans-serif;
         }
       `}</style>
     </div>

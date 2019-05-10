@@ -56,7 +56,8 @@ export const Controls: React.FC<{
       />
       <style jsx>{`
         .controls {
-          transition: opacity 200ms;
+          transition: opacity 2s;
+          transition-delay: 1s;
           display: flex;
           justify-content: center;
           flex-wrap: wrap;
@@ -68,6 +69,8 @@ export const Controls: React.FC<{
 
         .controls.faded:hover {
           opacity: 1;
+          transition-duration: 200ms;
+          transition-delay: 0s;
         }
       `}</style>
     </section>
