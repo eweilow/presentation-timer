@@ -6,6 +6,7 @@ import { useClock } from "../hooks/useClock";
 import { Controls } from "../components/controls";
 import { Footer } from "../components/footer";
 import { useAnalytics } from "../hooks/useAnalytics";
+import { Modal } from "../components/modal";
 
 const Header: React.FC<{ title: string }> = props => (
   <header>
@@ -39,6 +40,8 @@ export default () => {
   const alertTime = 0;
   const warnTime = 60000;
 
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
   const { timeUsed, active, setActive, reset } = useClock(0);
   const timeLeft = durationTime - timeUsed;
 
@@ -55,6 +58,7 @@ export default () => {
           active={active}
           setActive={setActive}
           reset={reset}
+          onOpenSettings={() => setSettingsOpen(true)}
         />
         <Header title={timeLeft > 0 ? "left" : "overtime"}>
           <Clock timeLeft={timeLeft + 999} />
@@ -62,6 +66,10 @@ export default () => {
         <Header title="used">
           <Clock timeLeft={timeUsed} />
         </Header>
+        <Modal
+          onShouldClose={() => setSettingsOpen(false)}
+          active={settingsOpen}
+        />
       </div>
       <Footer />
       <Head>
