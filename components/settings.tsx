@@ -92,9 +92,8 @@ export const Settings: React.FC<{
           <br />
           <p>
             When the time left is less than the warn time, the screen turns
-            orange.
-            <br />
-            This indicates that it's time to start wrapping the presentation.
+            orange. This indicates that it's time to start wrapping the
+            presentation.
           </p>
           <MaskedField
             required={true}
@@ -107,9 +106,7 @@ export const Settings: React.FC<{
           <br />
           <p>
             When the time left is less than the alert time, the screen turns
-            red.
-            <br />
-            This indicates that it's really time to wrap the presentation.
+            red. This indicates that it's really time to wrap the presentation.
           </p>
           <MaskedField
             required={true}
