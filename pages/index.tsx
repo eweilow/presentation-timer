@@ -1,15 +1,13 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { Clock } from "../components/clock";
-import clsx from "clsx";
 import { useClock } from "../hooks/useClock";
 import { Controls } from "../components/controls";
-import { Footer } from "../components/footer";
 import { useAnalytics } from "../hooks/useAnalytics";
 import { Modal } from "../components/modal";
 import { Settings, SettingsData } from "../components/settings";
 import Router, { DefaultQuery } from "next/router";
 import { NextFC } from "next";
-import NextSeo from "next-seo";
+import { Layout } from "../components/layout";
 
 const Header: React.FC<{ title: string }> = props => (
   <header>
@@ -114,21 +112,21 @@ const IndexPage: NextFC<InitialProps, InitialProps> = props => {
   const alertOvertime = timeLeft < props.alertTime + transitionTime;
   const warnOvertime = timeLeft < props.warnTime + transitionTime;
 
+  let backgroundOverride = undefined;
+  let colorOverride = undefined;
+
+  if (alertOvertime) {
+    backgroundOverride = "#d00114";
+  } else if (warnOvertime) {
+    backgroundOverride = "#d07d01";
+  }
+
   return (
-    <div className={clsx("container", { alertOvertime, warnOvertime })}>
-      <NextSeo
-        config={{
-          title: "Presentation Timer",
-          description: "Keep track of the time left in your presentations",
-          canonical: "https://presentation-timer.now.sh",
-          openGraph: {
-            url: "https://presentation-timer.now.sh",
-            title: "Presentation Timer",
-            description: "Keep track of the time left in your presentations",
-            site_name: "Presentation Timer"
-          }
-        }}
-      />
+    <Layout
+      transitionTime={5000}
+      backgroundOverride={backgroundOverride}
+      colorOverride={colorOverride}
+    >
       <div>
         <Controls
           timeUsed={timeUsed}
@@ -161,31 +159,7 @@ const IndexPage: NextFC<InitialProps, InitialProps> = props => {
           />
         </Modal>
       </div>
-      <Footer />
-      <style jsx>{`
-        .container {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          background: black;
-          color: white;
-
-          transition: background ${transitionTime}ms;
-        }
-        .container.warnOvertime {
-          background: #d07d01;
-          color: white;
-        }
-        .container.alertOvertime {
-          background: #d00114;
-          color: white;
-        }
-      `}</style>
-    </div>
+    </Layout>
   );
 };
 
