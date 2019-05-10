@@ -1,9 +1,9 @@
 const withPlugins = require("next-compose-plugins");
 const withTypescript = require("@zeit/next-typescript");
-const nextSourceMaps = require("@zeit/next-source-maps");
+const withSourceMaps = require("@zeit/next-source-maps");
 const webpack = require("webpack");
 
-module.exports = withPlugins([withTypescript, nextSourceMaps], {
+module.exports = withPlugins([withTypescript, withSourceMaps()], {
   target: "serverless",
   webpack: (config, { isServer, buildId }) => {
     config.plugins.push(
