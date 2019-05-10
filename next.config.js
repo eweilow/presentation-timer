@@ -6,7 +6,8 @@ const webpack = require("webpack");
 module.exports = withPlugins([withTypescript, nextSourceMaps], {
   target: "serverless",
   env: {
-    SENTRY_DSN: process.env.SENTRY_DSN
+    SENTRY_DSN: process.env.SENTRY_DSN,
+    ANALYTICS_ID: process.env.ANALYTICS_ID
   },
   webpack: (config, { isServer, buildId }) => {
     config.plugins.push(

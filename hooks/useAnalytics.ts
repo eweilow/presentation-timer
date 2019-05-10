@@ -13,7 +13,7 @@ function createClient() {
   }
   if (cached == null) {
     cached = ganalytics(
-      "UA-82332728-6",
+      process.env.ANALYTICS_ID,
       {
         aip: 1
       },
