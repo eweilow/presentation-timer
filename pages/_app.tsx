@@ -5,16 +5,11 @@ import sentry from "../utils/sentry";
 
 const { Sentry, captureException } = sentry();
 
-export default class ExtendedApp extends App<
-  {
-    hasError: boolean;
-    errorEventId?: string;
-  },
-  {
-    hasError: boolean;
-    errorEventId?: string;
-  }
-> {
+type PropsAndState = {
+  hasError: boolean;
+  errorEventId?: string;
+};
+export default class ExtendedApp extends App<PropsAndState, PropsAndState> {
   state = {
     hasError: false,
     errorEventId: undefined
@@ -34,8 +29,6 @@ export default class ExtendedApp extends App<
 
       return { pageProps };
     } catch (error) {
-      // Capture errors that happen during a page's getInitialProps.
-      // This will work on both client and server sides.
       const errorEventId = captureException(error, ctx);
       return {
         hasError: true,
@@ -45,9 +38,7 @@ export default class ExtendedApp extends App<
     }
   }
 
-  static getDerivedStateFromProps(props, state) {
-    // If there was an error generated within getInitialProps, and we haven't
-    // yet seen an error, we add it to this.state here
+  static getDerivedStateFromProps(props: PropsAndState, state: PropsAndState) {
     return {
       hasError: props.hasError || state.hasError || false,
       errorEventId: props.errorEventId || state.errorEventId || undefined
@@ -55,16 +46,12 @@ export default class ExtendedApp extends App<
   }
 
   static getDerivedStateFromError() {
-    // React Error Boundary here allows us to set state flagging the error (and
-    // later render a fallback UI).
     return { hasError: true };
   }
 
-  componentDidCatch(error, errorInfo) {
-    const errorEventId = captureException(error, { errorInfo });
+  componentDidCatch(error: any, errorInfo: any) {
+    const errorEventId = captureException(error, { errorInfo } as any);
 
-    // Store the event id at this point as we don't have access to it within
-    // `getDerivedStateFromError`.
     this.setState({ errorEventId });
   }
 
