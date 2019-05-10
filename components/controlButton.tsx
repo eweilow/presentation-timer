@@ -38,16 +38,22 @@ export const ControlButton: React.FC<
         color: inherit;
 
         transition: opacity 200ms, transform 200ms;
-        transform: scale3d(0.9, 0.9, 0.9);
+        transform: perspective(1px) scale3d(0.9, 0.9, 0.9);
       }
 
       button:hover:not([disabled]) {
-        transform: scale3d(1, 1, 1);
+        transform: perspective(1px) scale3d(1, 1, 1);
       }
 
       button[disabled] {
         cursor: default;
         opacity: 0.5;
+      }
+
+      @media (max-width: 600px) {
+        button {
+          margin: 4px;
+        }
       }
     `}</style>
   </button>

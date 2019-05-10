@@ -63,6 +63,22 @@ export const Controls: React.FC<{
           flex-wrap: wrap;
         }
 
+        @media (max-width: 600px) {
+          :global(main.container) {
+            padding-top: 72px;
+            box-sizing: border-box;
+          }
+
+          .controls {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 8px;
+            box-sizing: border-box;
+          }
+        }
+
         .controls.faded {
           opacity: 0.3;
         }
