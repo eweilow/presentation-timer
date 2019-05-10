@@ -48,7 +48,11 @@ export function useAnalytics(settings: SettingsData) {
         dr:
           typeof document.referrer === "string"
             ? document.referrer.replace(/\?.*$/, "")
-            : undefined
+            : undefined,
+        ua: navigator.userAgent,
+        vp: window.innerWidth + "x" + window.innerHeight,
+        sr: window.innerWidth + "x" + window.innerHeight,
+        ul: navigator.language
       });
     }, [Router.pathname, query]);
   }
