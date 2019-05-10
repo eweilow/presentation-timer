@@ -139,13 +139,27 @@ export const Settings: React.FC<{
           <style jsx>{`
             .settings {
               padding: 16px;
+              font-size: 18px;
             }
+            @media (max-width: 800px) {
+              .settings {
+                font-size: 16px;
+              }
+            }
+
+            @media (max-width: 400px) {
+              .settings {
+                font-size: 14px;
+              }
+            }
+
             header {
               font-size: 28px;
               font-weight: bold;
               color: #6200ff;
             }
             .buttons {
+              justify-content: flex-end;
               display: flex;
               margin: -8px;
               padding-top: 16px;
