@@ -40,7 +40,7 @@ export default () => {
   const alertTime = 0;
   const warnTime = 60000;
 
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(true);
 
   const { timeUsed, active, setActive, reset } = useClock(0);
   const timeLeft = durationTime - timeUsed;
