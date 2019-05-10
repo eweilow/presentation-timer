@@ -8,31 +8,7 @@ import { Settings, SettingsData } from "../components/settings";
 import Router, { DefaultQuery } from "next/router";
 import { NextFC } from "next";
 import { Layout } from "../components/layout";
-
-const Header: React.FC<{ title: string }> = props => (
-  <header>
-    <div className="title">{props.title}</div>
-    <div className="contents">{props.children}</div>
-    <style jsx>{`
-      header {
-        font-size: 140px;
-        display: block;
-        width: 100%;
-        text-align: center;
-        padding: 0.5em;
-        box-sizing: border-box;
-      }
-      .title {
-        opacity: 0.6;
-        font-size: 0.8em;
-      }
-      .contents {
-        font-weight: bold;
-        font-size: 1em;
-      }
-    `}</style>
-  </header>
-);
+import { Header } from "../components/header";
 
 const encodeBase64 = (process as any).browser
   ? btoa
