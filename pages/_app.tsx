@@ -2,6 +2,7 @@
 
 import App from "next/app";
 import sentry from "../utils/sentry";
+import { Layout } from "../components/layout";
 
 const { Sentry, captureException } = sentry();
 
@@ -58,29 +59,31 @@ export default class ExtendedApp extends App<PropsAndState, PropsAndState> {
   render() {
     if (this.state.hasError) {
       return (
-        <section>
-          <h1>There was an error!</h1>
-          <p>
-            <a
-              href="#"
-              onClick={() =>
-                Sentry.showReportDialog({ eventId: this.state.errorEventId })
-              }
-            >
-              📣 Report this error
-            </a>
-          </p>
-          <p>
-            <a
-              href="#"
-              onClick={() => {
-                window.location.reload(true);
-              }}
-            >
-              Or, try reloading the page
-            </a>
-          </p>
-        </section>
+        <Layout>
+          <div>
+            <h1>There was an error!</h1>
+            <p>
+              <a
+                href="#"
+                onClick={() =>
+                  Sentry.showReportDialog({ eventId: this.state.errorEventId })
+                }
+              >
+                📣 Report this error
+              </a>
+            </p>
+            <p>
+              <a
+                href="#"
+                onClick={() => {
+                  window.location.reload(true);
+                }}
+              >
+                Or, try reloading the page
+              </a>
+            </p>
+          </div>
+        </Layout>
       );
     }
     return super.render();

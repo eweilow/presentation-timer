@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { Layout } from "../components/layout";
 
 class Index extends React.Component {
   static getInitialProps({ query, req }) {
@@ -29,8 +30,8 @@ class Index extends React.Component {
     }
 
     return (
-      <div>
-        <h2>Index page</h2>
+      <Layout>
+        <h2>Error testing</h2>
         <ul>
           <li>
             <a href="#" onClick={this.raiseErrorInRender}>
@@ -53,7 +54,7 @@ class Index extends React.Component {
             </a>
           </li>
         </ul>
-      </div>
+      </Layout>
     );
   }
 }
