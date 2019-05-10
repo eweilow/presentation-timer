@@ -2,6 +2,7 @@ import { useMemo, useEffect } from "react";
 
 import ganalytics, { GAnalytics } from "ganalytics";
 import Router from "next/router";
+import { SettingsData } from "../components/settings";
 
 let cached: GAnalytics;
 
@@ -11,28 +12,44 @@ function createClient() {
     return null;
   }
   if (cached == null) {
-    cached = ganalytics("UA-82332728-6", {
-      aip: 1
-    });
+    cached = ganalytics(
+      "UA-82332728-6",
+      {
+        aip: 1
+      },
+      true
+    );
   }
 
   return cached;
 }
 
-export function useAnalytics() {
+export function useAnalytics(settings: SettingsData) {
   if ((process as any).browser) {
     const client = useMemo(() => createClient(), []);
+
+    let query = "";
+    if (Router.pathname === "/") {
+      query +=
+        "?dur=" +
+        encodeURIComponent(settings.duration) +
+        "&alert=" +
+        encodeURIComponent(settings.alert) +
+        "&warn=" +
+        encodeURIComponent(settings.warn);
+    }
     useEffect(() => {
       if (client == null) {
         return;
       }
 
-      function handler(url: string) {
-        client.send("pageview");
-      }
-      Router.events.on("routeChangeComplete", handler);
-
-      return () => Router.events.off("routeChangeComplete", handler);
-    }, []);
+      client.send("pageview", {
+        dl: location.href.replace(/\?.*$/, "") + query,
+        dr:
+          typeof document.referrer === "string"
+            ? document.referrer.replace(/\?.*$/, "")
+            : undefined
+      });
+    }, [Router.pathname, query]);
   }
 }

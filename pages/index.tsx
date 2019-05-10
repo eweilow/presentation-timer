@@ -102,7 +102,7 @@ type InitialProps = {
 };
 
 const IndexPage: NextFC<InitialProps, InitialProps> = props => {
-  useAnalytics();
+  useAnalytics(props.settings);
 
   const [settingsOpen, setSettingsOpen] = useState(false);
 
