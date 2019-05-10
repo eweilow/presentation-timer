@@ -14,13 +14,14 @@ export const Settings = () => (
       <MaskedInput
         mask={[/\d/, /\d/, ":", /\d/, /\d/, ":", /\d/, /\d/]}
         placeholder="hh:mm:ss"
+        value="001800"
       />
     </InputBase>
     <br />
     <p>
       When the time left is less than the warn time, the screen turns orange.
       <br />
-      This is indicates that it's time to start wrapping the presentation.
+      This indicates that it's time to start wrapping the presentation.
     </p>
     <InputBase
       minWidth={240}
@@ -28,13 +29,17 @@ export const Settings = () => (
       required={true}
       label={"Warn at time"}
     >
-      <MaskedInput mask={[/\d/, /\d/, ":", /\d/, /\d/]} placeholder="mm:ss" />
+      <MaskedInput
+        mask={[/\d/, /\d/, ":", /\d/, /\d/]}
+        placeholder="mm:ss"
+        value="0100"
+      />
     </InputBase>
     <br />
     <p>
       When the time left is less than the alert time, the screen turns red.
       <br />
-      This is indicates that it's really time to wrap the presentation.
+      This indicates that it's really time to wrap the presentation.
     </p>
     <InputBase
       minWidth={240}
@@ -42,7 +47,11 @@ export const Settings = () => (
       required={true}
       label={"Alert at time"}
     >
-      <MaskedInput mask={[/\d/, /\d/, ":", /\d/, /\d/]} placeholder="mm:ss" />
+      <MaskedInput
+        mask={[/\d/, /\d/, ":", /\d/, /\d/]}
+        placeholder="mm:ss"
+        value="0000"
+      />
     </InputBase>
     <style jsx>{`
       .settings {
