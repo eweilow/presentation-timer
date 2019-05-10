@@ -51,7 +51,11 @@ export default class ExtendedApp extends App<PropsAndState, PropsAndState> {
   }
 
   componentDidCatch(error: any, errorInfo: any) {
-    const errorEventId = captureException(error, { errorInfo } as any);
+    const errorEventId = captureException(error, {
+      query: this.props.router.query,
+      pathname: this.props.router.pathname,
+      errorInfo
+    } as any);
 
     this.setState({ errorEventId });
   }

@@ -68,11 +68,11 @@ export default (release: string = process.env.SENTRY_RELEASE) => {
 
           if ((process as any).browser) {
             scope.setTag("ssr", "false");
+            scope.setExtra("url", location.href.replace(/\?.*$/, ""));
           } else {
             scope.setTag("ssr", "true");
             scope.setExtra("url", req.url);
             scope.setExtra("method", req.method);
-            scope.setExtra("headers", req.headers);
           }
 
           if (errorInfo) {
