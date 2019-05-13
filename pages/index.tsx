@@ -103,7 +103,7 @@ const IndexPage: NextFC<InitialProps, InitialProps> = props => {
       backgroundOverride={backgroundOverride}
       colorOverride={colorOverride}
     >
-      <div>
+      <div className="outer">
         <Controls
           timeUsed={timeUsed}
           active={active}
@@ -111,12 +111,14 @@ const IndexPage: NextFC<InitialProps, InitialProps> = props => {
           reset={reset}
           onOpenSettings={() => setSettingsOpen(true)}
         />
-        <Header title={timeLeft > 0 ? "left" : "overtime"}>
-          <Clock timeLeft={timeLeft + 999} />
-        </Header>
-        <Header title="used">
-          <Clock timeLeft={timeUsed} />
-        </Header>
+        <section>
+          <Header title={timeLeft > 0 ? "left" : "overtime"}>
+            <Clock timeLeft={timeLeft + 999} />
+          </Header>
+          <Header title="used">
+            <Clock timeLeft={timeUsed} />
+          </Header>
+        </section>
         <Modal
           onShouldClose={() => setSettingsOpen(false)}
           active={settingsOpen}
@@ -134,6 +136,16 @@ const IndexPage: NextFC<InitialProps, InitialProps> = props => {
             }}
           />
         </Modal>
+        <style jsx>{`
+          .outer {
+            width: 100%;
+          }
+          section {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+          }
+        `}</style>
       </div>
     </Layout>
   );

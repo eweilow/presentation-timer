@@ -6,12 +6,14 @@ export const Header: React.FC<{ title: string }> = props => (
     <div className="contents">{props.children}</div>
     <style jsx>{`
       header {
+        flex: 1;
         font-size: 140px;
         display: block;
         width: 100%;
         text-align: center;
         padding: 32px;
         box-sizing: border-box;
+        min-width: 4.7em;
       }
 
       @media (max-width: 1600px) {
@@ -19,10 +21,15 @@ export const Header: React.FC<{ title: string }> = props => (
           font-size: 125px;
         }
       }
-      @media (max-width: 1000px) {
+      @media (max-width: 1400px) {
+        header {
+          font-size: 110px;
+        }
+      }
+      @media (max-width: 1100px) {
         header {
           padding: 24px;
-          font-size: 110px;
+          font-size: 100px;
         }
       }
       @media (max-width: 800px) {
@@ -51,7 +58,8 @@ export const Header: React.FC<{ title: string }> = props => (
       .contents {
         font-weight: bold;
         font-size: 1em;
-        line-height: 1.3em;
+        line-height: 1em;
+        margin-top: 0.1em;
       }
     `}</style>
   </header>
