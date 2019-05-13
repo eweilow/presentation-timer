@@ -75,6 +75,18 @@ type InitialProps = {
   warnTime: number;
 };
 
+const timings = [
+  ["inledning", 0, 50],
+  ["projektet", 1, 50],
+  ["historik", 4, 0],
+  ["teoretisk bakgrund", 6, 20],
+  ["antaganden & systemet", 8, 10],
+  ["metodik & numerik", 11, 45],
+  ["resultat", 15, 45],
+  ["slutsats", 17, 0],
+  ["summering", 18, 0]
+] as Array<[string, number, number]>;
+
 const IndexPage: NextFC<InitialProps, InitialProps> = props => {
   useAnalytics(props.settings);
 
@@ -97,6 +109,15 @@ const IndexPage: NextFC<InitialProps, InitialProps> = props => {
     backgroundOverride = "#d07d01";
   }
 
+  const mappedTimings = timings.map(([name, min, sec]) => ({
+    name,
+    timeUntil: (min * 60 + sec) * 1000 - timeUsed
+  }));
+
+  const nextTiming =
+    mappedTimings.find(el => el.timeUntil > 0) ||
+    mappedTimings[mappedTimings.length - 1];
+
   return (
     <Layout
       transitionTime={5000}
@@ -111,12 +132,24 @@ const IndexPage: NextFC<InitialProps, InitialProps> = props => {
           reset={reset}
           onOpenSettings={() => setSettingsOpen(true)}
         />
-        <Header title={timeLeft > 0 ? "left" : "overtime"}>
-          <Clock timeLeft={timeLeft + 999} />
-        </Header>
-        <Header title="used">
-          <Clock timeLeft={timeUsed} />
-        </Header>
+        <section>
+          <Header title={timeLeft > 0 ? "left" : "overtime"}>
+            <Clock timeLeft={timeLeft + 999} />
+          </Header>
+          <Header title="used">
+            <Clock timeLeft={timeUsed} />
+          </Header>
+          <Header title={nextTiming.name.toLowerCase()}>
+            <Clock timeLeft={Math.max(0, nextTiming.timeUntil + 999)} />
+          </Header>
+          <style jsx>{`
+            section {
+              display: flex;
+              flex-wrap: wrap;
+              width: 100%;
+            }
+          `}</style>
+        </section>
         <Modal
           onShouldClose={() => setSettingsOpen(false)}
           active={settingsOpen}
