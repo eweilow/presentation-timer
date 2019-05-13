@@ -132,15 +132,24 @@ const IndexPage: NextFC<InitialProps, InitialProps> = props => {
           reset={reset}
           onOpenSettings={() => setSettingsOpen(true)}
         />
-        <Header title={timeLeft > 0 ? "left" : "overtime"}>
-          <Clock timeLeft={timeLeft + 999} />
-        </Header>
-        <Header title="used">
-          <Clock timeLeft={timeUsed} />
-        </Header>
-        <Header title={nextTiming.name.toLowerCase()}>
-          <Clock timeLeft={Math.max(0, nextTiming.timeUntil + 999)} />
-        </Header>
+        <section>
+          <Header title={timeLeft > 0 ? "left" : "overtime"}>
+            <Clock timeLeft={timeLeft + 999} />
+          </Header>
+          <Header title="used">
+            <Clock timeLeft={timeUsed} />
+          </Header>
+          <Header title={nextTiming.name.toLowerCase()}>
+            <Clock timeLeft={Math.max(0, nextTiming.timeUntil + 999)} />
+          </Header>
+          <style jsx>{`
+            section {
+              display: flex;
+              flex-wrap: wrap;
+              width: 100%;
+            }
+          `}</style>
+        </section>
         <Modal
           onShouldClose={() => setSettingsOpen(false)}
           active={settingsOpen}
